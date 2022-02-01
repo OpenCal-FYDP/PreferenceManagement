@@ -1,4 +1,4 @@
-package preferencemanagementservice
+package service
 
 import (
 	"context"
