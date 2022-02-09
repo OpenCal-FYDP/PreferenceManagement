@@ -7,46 +7,46 @@ Parameters:
     Description: UserPreferencesKeyPair
     Type: AWS::EC2::KeyPair::KeyName
     ConstraintDescription: must be the name of an existing EC2 KeyPair.
-  InstanceType:
-    Description: WebServer EC2 instance type
-    Type: String
-    Default: t2.micro
-    AllowedValues: [t2.nano, t2.micro, t2.small, t2.medium, t2.large, t2.xlarge, t2.2xlarge,
-                    t3.nano, t3.micro, t3.small, t3.medium, t3.large, t3.xlarge, t3.2xlarge,
-                    m4.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m4.10xlarge,
-                    m5.large, m5.xlarge, m5.2xlarge, m5.4xlarge,
-                    c5.large, c5.xlarge, c5.2xlarge, c5.4xlarge, c5.9xlarge,
-                    g3.8xlarge,
-                    r5.large, r5.xlarge, r5.2xlarge, r5.4xlarge, r3.12xlarge,
-                    i3.xlarge, i3.2xlarge, i3.4xlarge, i3.8xlarge,
-                    d2.xlarge, d2.2xlarge, d2.4xlarge, d2.8xlarge]
-    ConstraintDescription: must be a valid EC2 instance type.
-  SSHLocation:
-    Description: The IP address range that can be used to SSH to the EC2 instances
-    Type: String
-    MinLength: 9
-    MaxLength: 18
-    Default: 0.0.0.0/0
-    AllowedPattern: (\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})
-    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
-  LatestAmiId:
-    Type:  'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
-    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
-  # dynamo params
+  # InstanceType:
+  #   Description: WebServer EC2 instance type
+  #   Type: String
+  #   Default: t2.micro
+  #   AllowedValues: [t2.nano, t2.micro, t2.small, t2.medium, t2.large, t2.xlarge, t2.2xlarge,
+  #                   t3.nano, t3.micro, t3.small, t3.medium, t3.large, t3.xlarge, t3.2xlarge,
+  #                   m4.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m4.10xlarge,
+  #                   m5.large, m5.xlarge, m5.2xlarge, m5.4xlarge,
+  #                   c5.large, c5.xlarge, c5.2xlarge, c5.4xlarge, c5.9xlarge,
+  #                   g3.8xlarge,
+  #                   r5.large, r5.xlarge, r5.2xlarge, r5.4xlarge, r3.12xlarge,
+  #                   i3.xlarge, i3.2xlarge, i3.4xlarge, i3.8xlarge,
+  #                   d2.xlarge, d2.2xlarge, d2.4xlarge, d2.8xlarge]
+  #   ConstraintDescription: must be a valid EC2 instance type.
+  # SSHLocation:
+  #   Description: The IP address range that can be used to SSH to the EC2 instances
+  #   Type: String
+  #   MinLength: 9
+  #   MaxLength: 18
+  #   Default: 0.0.0.0/0
+  #   AllowedPattern: (\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})
+  #   ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+  # LatestAmiId:
+  #   Type:  'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+  #   Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
+  # # dynamo params
   ReadCapacityUnits:
     Description: Provisioned read throughput
     Type: Number
-    Default: '5'
-    MinValue: '5'
-    MaxValue: '10'
-    ConstraintDescription: must be between 5 and 10000
+    Default: '1'
+    MinValue: '1'
+    MaxValue: '1'
+    ConstraintDescription: must be between 1 and 10000
   WriteCapacityUnits:
     Description: Provisioned write throughput
     Type: Number
-    Default: '5'
-    MinValue: '5'
-    MaxValue: '10'
-    ConstraintDescription: must be between 5 and 10000
+    Default: '1'
+    MinValue: '1'
+    MaxValue: '1'
+    ConstraintDescription: must be between 1 and 10000
 Resources:
   # # ec2 resources
   # EC2Instance:
@@ -113,5 +113,5 @@ Outputs:
   #   Description: Public IP address of the newly created EC2 instance
   #   Value: !GetAtt [EC2Instance, PublicIp]
   TableName:
-    Value: !Ref 'myDynamoDBTable'
+    Value: !Ref 'userPreferencesTable'
     Description: Table name of the newly created DynamoDB table
