@@ -20,11 +20,21 @@ func (p *PreferencesServer) GetUserProfile(ctx context.Context, req *rpc.GetUser
 }
 
 func (p *PreferencesServer) GetAvailability(ctx context.Context, req *rpc.GetAvailabilityReq) (*rpc.GetAvailabilityRes, error) {
-	panic("implement me")
+	res := new(rpc.GetAvailabilityRes)
+	err := p.storage.GetAvailability(req, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
 }
 
 func (p *PreferencesServer) GetBooking(ctx context.Context, req *rpc.GetBookingReq) (*rpc.GetBookingRes, error) {
-	panic("implement me")
+	res := new(rpc.GetBookingRes)
+	err := p.storage.GetBooking(req, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
 }
 
 func (p *PreferencesServer) SetUserProfile(ctx context.Context, req *rpc.SetUserProfileReq) (*rpc.SetUserProfileRes, error) {
@@ -37,11 +47,21 @@ func (p *PreferencesServer) SetUserProfile(ctx context.Context, req *rpc.SetUser
 }
 
 func (p *PreferencesServer) SetAvailability(ctx context.Context, req *rpc.SetAvailabilityReq) (*rpc.SetAvailabilityRes, error) {
-	panic("implement me")
+	res := new(rpc.SetAvailabilityRes)
+	err := p.storage.SetAvailability(req, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
 }
 
 func (p *PreferencesServer) SetBooking(ctx context.Context, req *rpc.SetBookingReq) (*rpc.SetBookingRes, error) {
-	panic("implement me")
+	res := new(rpc.SetBookingRes)
+	err := p.storage.SetBooking(req, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
 }
 
 func New(s *storage.Storage) *PreferencesServer {

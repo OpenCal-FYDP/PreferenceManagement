@@ -64,3 +64,78 @@ func (s *Storage) SetUserProfile(req *rpc.SetUserProfileReq, res *rpc.SetUserPro
 	_, err = s.client.PutItem(input)
 	return err
 }
+
+func (s *Storage) GetAvailability(req *rpc.GetAvailabilityReq, res *rpc.GetAvailabilityRes) error {
+	result, err := s.client.GetItem(&dynamodb.GetItemInput{
+		TableName: aws.String(tableName),
+		Key: map[string]*dynamodb.AttributeValue{
+			"userID": {
+				S: aws.String(req.UserID),
+			},
+		},
+	})
+	if err != nil {
+		return err
+	}
+
+	if result.Item == nil {
+		return NotFound
+	}
+	err = dynamodbattribute.UnmarshalMap(result.Item, &res)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *Storage) SetAvailability(req *rpc.SetAvailabilityReq, res *rpc.SetAvailabilityRes) error {
+	av, err := dynamodbattribute.MarshalMap(req)
+	if err != nil {
+		return err
+	}
+	input := &dynamodb.PutItemInput{
+		Item:      av,
+		TableName: aws.String(tableName),
+	}
+	_, err = s.client.PutItem(input)
+	return err
+}
+
+func (s *Storage) GetBooking(req *rpc.GetBookingReq, res *rpc.GetBookingRes) error {
+	result, err := s.client.GetItem(&dynamodb.GetItemInput{
+		TableName: aws.String(tableName),
+		Key: map[string]*dynamodb.AttributeValue{
+			"userID": {
+				S: aws.String(req.UserID),
+			},
+			"bookingLinkID": {
+				S: aws.String(req.BookingLinkID),
+			},
+		},
+	})
+	if err != nil {
+		return err
+	}
+
+	if result.Item == nil {
+		return NotFound
+	}
+	err = dynamodbattribute.UnmarshalMap(result.Item, &res)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *Storage) SetBooking(req *rpc.SetBookingReq, res *rpc.SetBookingRes) error {
+	av, err := dynamodbattribute.MarshalMap(req)
+	if err != nil {
+		return err
+	}
+	input := &dynamodb.PutItemInput{
+		Item:      av,
+		TableName: aws.String(tableName),
+	}
+	_, err = s.client.PutItem(input)
+	return err
+}
