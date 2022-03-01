@@ -13,7 +13,7 @@ service PreferenceManagementService {
 }
 
 message GetUserProfileReq {
-  string userID = 1;
+  string email = 1;
 }
 
 message Settings {
@@ -33,7 +33,7 @@ message GetUserProfileRes {
 }
 
 message GetAvailabilityReq {
-  string userID = 1;
+  string email = 1;
 }
 
 message GetAvailabilityRes {
@@ -45,7 +45,7 @@ message GetAvailabilityRes {
 }
 
 message GetBookingReq {
-  string userID = 1;
+  string email = 1;
   string bookingLinkID = 2;
 }
 
@@ -59,37 +59,34 @@ message GetBookingRes {
   string availabilityToUse =7;
 }
 message SetUserProfileReq {
-  string userID = 1;
-  string email = 2;
-  string username = 3;
-  repeated string timeAvailability = 4;
-  repeated string bookingLinks = 5;
-  Settings settings = 6;
+  string email = 1;
+  string username = 2;
+  repeated string timeAvailability = 3;
+  repeated string bookingLinks = 4;
+  Settings settings = 5;
 }
 
 message SetUserProfileRes {}
 
 message SetAvailabilityReq {
-  string userID = 1;
-  string email = 2;
-  string username = 3;
-  repeated string timeAvailability = 4;
-  repeated string bookingLinks = 5;
-  Settings settings = 6;
+  string email = 1;
+  string username = 2;
+  repeated string timeAvailability = 3;
+  repeated string bookingLinks = 4;
+  Settings settings = 5;
 }
 
 message SetAvailabilityRes {}
 
 message SetBookingReq {
-  string userID = 1;
-  string bookingLinkID = 2;
-  bool isActive = 3;
-  bool isMultiUse = 4;
-  repeated string attendees = 5;
-  string conferencing = 6;
-  repeated string timeIncrements = 7;
-  string recurrence = 8;
-  string availabilityToUse = 9;
+  string bookingLinkID = 1;
+  bool isActive = 2;
+  bool isMultiUse = 3;
+  repeated string attendees = 4;
+  string conferencing = 5;
+  repeated string timeIncrements = 6;
+  string recurrence = 7;
+  string availabilityToUse = 8;
 }
 
 message SetBookingRes {}
