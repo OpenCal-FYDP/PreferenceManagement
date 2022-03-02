@@ -221,7 +221,7 @@ export const GetUserProfileReq = {
    */
   initialize: function () {
     return {
-      userID: "",
+      email: "",
     };
   },
 
@@ -229,8 +229,8 @@ export const GetUserProfileReq = {
    * @private
    */
   _writeMessage: function (msg, writer) {
-    if (msg.userID) {
-      writer.writeString(1, msg.userID);
+    if (msg.email) {
+      writer.writeString(1, msg.email);
     }
     return writer;
   },
@@ -240,8 +240,8 @@ export const GetUserProfileReq = {
    */
   _writeMessageJSON: function (msg) {
     const json = {};
-    if (msg.userID) {
-      json.userID = msg.userID;
+    if (msg.email) {
+      json.email = msg.email;
     }
     return json;
   },
@@ -254,7 +254,7 @@ export const GetUserProfileReq = {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
-          msg.userID = reader.readString();
+          msg.email = reader.readString();
           break;
         }
         default: {
@@ -270,9 +270,9 @@ export const GetUserProfileReq = {
    * @private
    */
   _readMessageJSON: function (msg, json) {
-    const userID = json.userID ?? json.userID;
-    if (userID) {
-      msg.userID = userID;
+    const email = json.email ?? json.email;
+    if (email) {
+      msg.email = email;
     }
     return msg;
   },
@@ -649,7 +649,7 @@ export const GetAvailabilityReq = {
    */
   initialize: function () {
     return {
-      userID: "",
+      email: "",
     };
   },
 
@@ -657,8 +657,8 @@ export const GetAvailabilityReq = {
    * @private
    */
   _writeMessage: function (msg, writer) {
-    if (msg.userID) {
-      writer.writeString(1, msg.userID);
+    if (msg.email) {
+      writer.writeString(1, msg.email);
     }
     return writer;
   },
@@ -668,8 +668,8 @@ export const GetAvailabilityReq = {
    */
   _writeMessageJSON: function (msg) {
     const json = {};
-    if (msg.userID) {
-      json.userID = msg.userID;
+    if (msg.email) {
+      json.email = msg.email;
     }
     return json;
   },
@@ -682,7 +682,7 @@ export const GetAvailabilityReq = {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
-          msg.userID = reader.readString();
+          msg.email = reader.readString();
           break;
         }
         default: {
@@ -698,9 +698,9 @@ export const GetAvailabilityReq = {
    * @private
    */
   _readMessageJSON: function (msg, json) {
-    const userID = json.userID ?? json.userID;
-    if (userID) {
-      msg.userID = userID;
+    const email = json.email ?? json.email;
+    if (email) {
+      msg.email = email;
     }
     return msg;
   },
@@ -916,7 +916,7 @@ export const GetBookingReq = {
    */
   initialize: function () {
     return {
-      userID: "",
+      email: "",
       bookingLinkID: "",
     };
   },
@@ -925,8 +925,8 @@ export const GetBookingReq = {
    * @private
    */
   _writeMessage: function (msg, writer) {
-    if (msg.userID) {
-      writer.writeString(1, msg.userID);
+    if (msg.email) {
+      writer.writeString(1, msg.email);
     }
     if (msg.bookingLinkID) {
       writer.writeString(2, msg.bookingLinkID);
@@ -939,8 +939,8 @@ export const GetBookingReq = {
    */
   _writeMessageJSON: function (msg) {
     const json = {};
-    if (msg.userID) {
-      json.userID = msg.userID;
+    if (msg.email) {
+      json.email = msg.email;
     }
     if (msg.bookingLinkID) {
       json.bookingLinkID = msg.bookingLinkID;
@@ -956,7 +956,7 @@ export const GetBookingReq = {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
-          msg.userID = reader.readString();
+          msg.email = reader.readString();
           break;
         }
         case 2: {
@@ -976,9 +976,9 @@ export const GetBookingReq = {
    * @private
    */
   _readMessageJSON: function (msg, json) {
-    const userID = json.userID ?? json.userID;
-    if (userID) {
-      msg.userID = userID;
+    const email = json.email ?? json.email;
+    if (email) {
+      msg.email = email;
     }
     const bookingLinkID = json.bookingLinkID ?? json.bookingLinkID;
     if (bookingLinkID) {
@@ -1223,7 +1223,6 @@ export const SetUserProfileReq = {
    */
   initialize: function () {
     return {
-      userID: "",
       email: "",
       username: "",
       timeAvailability: [],
@@ -1236,23 +1235,20 @@ export const SetUserProfileReq = {
    * @private
    */
   _writeMessage: function (msg, writer) {
-    if (msg.userID) {
-      writer.writeString(1, msg.userID);
-    }
     if (msg.email) {
-      writer.writeString(2, msg.email);
+      writer.writeString(1, msg.email);
     }
     if (msg.username) {
-      writer.writeString(3, msg.username);
+      writer.writeString(2, msg.username);
     }
     if (msg.timeAvailability?.length) {
-      writer.writeRepeatedString(4, msg.timeAvailability);
+      writer.writeRepeatedString(3, msg.timeAvailability);
     }
     if (msg.bookingLinks?.length) {
-      writer.writeRepeatedString(5, msg.bookingLinks);
+      writer.writeRepeatedString(4, msg.bookingLinks);
     }
     if (msg.settings) {
-      writer.writeMessage(6, msg.settings, Settings._writeMessage);
+      writer.writeMessage(5, msg.settings, Settings._writeMessage);
     }
     return writer;
   },
@@ -1262,9 +1258,6 @@ export const SetUserProfileReq = {
    */
   _writeMessageJSON: function (msg) {
     const json = {};
-    if (msg.userID) {
-      json.userID = msg.userID;
-    }
     if (msg.email) {
       json.email = msg.email;
     }
@@ -1294,26 +1287,22 @@ export const SetUserProfileReq = {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
-          msg.userID = reader.readString();
-          break;
-        }
-        case 2: {
           msg.email = reader.readString();
           break;
         }
-        case 3: {
+        case 2: {
           msg.username = reader.readString();
           break;
         }
-        case 4: {
+        case 3: {
           msg.timeAvailability.push(reader.readString());
           break;
         }
-        case 5: {
+        case 4: {
           msg.bookingLinks.push(reader.readString());
           break;
         }
-        case 6: {
+        case 5: {
           reader.readMessage(msg.settings, Settings._readMessage);
           break;
         }
@@ -1330,10 +1319,6 @@ export const SetUserProfileReq = {
    * @private
    */
   _readMessageJSON: function (msg, json) {
-    const userID = json.userID ?? json.userID;
-    if (userID) {
-      msg.userID = userID;
-    }
     const email = json.email ?? json.email;
     if (email) {
       msg.email = email;
@@ -1446,7 +1431,6 @@ export const SetAvailabilityReq = {
    */
   initialize: function () {
     return {
-      userID: "",
       email: "",
       username: "",
       timeAvailability: [],
@@ -1459,23 +1443,20 @@ export const SetAvailabilityReq = {
    * @private
    */
   _writeMessage: function (msg, writer) {
-    if (msg.userID) {
-      writer.writeString(1, msg.userID);
-    }
     if (msg.email) {
-      writer.writeString(2, msg.email);
+      writer.writeString(1, msg.email);
     }
     if (msg.username) {
-      writer.writeString(3, msg.username);
+      writer.writeString(2, msg.username);
     }
     if (msg.timeAvailability?.length) {
-      writer.writeRepeatedString(4, msg.timeAvailability);
+      writer.writeRepeatedString(3, msg.timeAvailability);
     }
     if (msg.bookingLinks?.length) {
-      writer.writeRepeatedString(5, msg.bookingLinks);
+      writer.writeRepeatedString(4, msg.bookingLinks);
     }
     if (msg.settings) {
-      writer.writeMessage(6, msg.settings, Settings._writeMessage);
+      writer.writeMessage(5, msg.settings, Settings._writeMessage);
     }
     return writer;
   },
@@ -1485,9 +1466,6 @@ export const SetAvailabilityReq = {
    */
   _writeMessageJSON: function (msg) {
     const json = {};
-    if (msg.userID) {
-      json.userID = msg.userID;
-    }
     if (msg.email) {
       json.email = msg.email;
     }
@@ -1517,26 +1495,22 @@ export const SetAvailabilityReq = {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
-          msg.userID = reader.readString();
-          break;
-        }
-        case 2: {
           msg.email = reader.readString();
           break;
         }
-        case 3: {
+        case 2: {
           msg.username = reader.readString();
           break;
         }
-        case 4: {
+        case 3: {
           msg.timeAvailability.push(reader.readString());
           break;
         }
-        case 5: {
+        case 4: {
           msg.bookingLinks.push(reader.readString());
           break;
         }
-        case 6: {
+        case 5: {
           reader.readMessage(msg.settings, Settings._readMessage);
           break;
         }
@@ -1553,10 +1527,6 @@ export const SetAvailabilityReq = {
    * @private
    */
   _readMessageJSON: function (msg, json) {
-    const userID = json.userID ?? json.userID;
-    if (userID) {
-      msg.userID = userID;
-    }
     const email = json.email ?? json.email;
     if (email) {
       msg.email = email;
@@ -1667,7 +1637,6 @@ export const SetBookingReq = {
    */
   initialize: function () {
     return {
-      userID: "",
       bookingLinkID: "",
       isActive: false,
       isMultiUse: false,
@@ -1683,32 +1652,29 @@ export const SetBookingReq = {
    * @private
    */
   _writeMessage: function (msg, writer) {
-    if (msg.userID) {
-      writer.writeString(1, msg.userID);
-    }
     if (msg.bookingLinkID) {
-      writer.writeString(2, msg.bookingLinkID);
+      writer.writeString(1, msg.bookingLinkID);
     }
     if (msg.isActive) {
-      writer.writeBool(3, msg.isActive);
+      writer.writeBool(2, msg.isActive);
     }
     if (msg.isMultiUse) {
-      writer.writeBool(4, msg.isMultiUse);
+      writer.writeBool(3, msg.isMultiUse);
     }
     if (msg.attendees?.length) {
-      writer.writeRepeatedString(5, msg.attendees);
+      writer.writeRepeatedString(4, msg.attendees);
     }
     if (msg.conferencing) {
-      writer.writeString(6, msg.conferencing);
+      writer.writeString(5, msg.conferencing);
     }
     if (msg.timeIncrements?.length) {
-      writer.writeRepeatedString(7, msg.timeIncrements);
+      writer.writeRepeatedString(6, msg.timeIncrements);
     }
     if (msg.recurrence) {
-      writer.writeString(8, msg.recurrence);
+      writer.writeString(7, msg.recurrence);
     }
     if (msg.availabilityToUse) {
-      writer.writeString(9, msg.availabilityToUse);
+      writer.writeString(8, msg.availabilityToUse);
     }
     return writer;
   },
@@ -1718,9 +1684,6 @@ export const SetBookingReq = {
    */
   _writeMessageJSON: function (msg) {
     const json = {};
-    if (msg.userID) {
-      json.userID = msg.userID;
-    }
     if (msg.bookingLinkID) {
       json.bookingLinkID = msg.bookingLinkID;
     }
@@ -1756,38 +1719,34 @@ export const SetBookingReq = {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
-          msg.userID = reader.readString();
-          break;
-        }
-        case 2: {
           msg.bookingLinkID = reader.readString();
           break;
         }
-        case 3: {
+        case 2: {
           msg.isActive = reader.readBool();
           break;
         }
-        case 4: {
+        case 3: {
           msg.isMultiUse = reader.readBool();
           break;
         }
-        case 5: {
+        case 4: {
           msg.attendees.push(reader.readString());
           break;
         }
-        case 6: {
+        case 5: {
           msg.conferencing = reader.readString();
           break;
         }
-        case 7: {
+        case 6: {
           msg.timeIncrements.push(reader.readString());
           break;
         }
-        case 8: {
+        case 7: {
           msg.recurrence = reader.readString();
           break;
         }
-        case 9: {
+        case 8: {
           msg.availabilityToUse = reader.readString();
           break;
         }
@@ -1804,10 +1763,6 @@ export const SetBookingReq = {
    * @private
    */
   _readMessageJSON: function (msg, json) {
-    const userID = json.userID ?? json.userID;
-    if (userID) {
-      msg.userID = userID;
-    }
     const bookingLinkID = json.bookingLinkID ?? json.bookingLinkID;
     if (bookingLinkID) {
       msg.bookingLinkID = bookingLinkID;

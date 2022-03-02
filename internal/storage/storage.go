@@ -33,8 +33,8 @@ func (s *Storage) GetUserProfile(req *rpc.GetUserProfileReq, res *rpc.GetUserPro
 	result, err := s.client.GetItem(&dynamodb.GetItemInput{
 		TableName: aws.String(tableName),
 		Key: map[string]*dynamodb.AttributeValue{
-			"userID": {
-				S: aws.String(req.UserID),
+			"email": {
+				S: aws.String(req.GetEmail()),
 			},
 		},
 	})
@@ -69,8 +69,8 @@ func (s *Storage) GetAvailability(req *rpc.GetAvailabilityReq, res *rpc.GetAvail
 	result, err := s.client.GetItem(&dynamodb.GetItemInput{
 		TableName: aws.String(tableName),
 		Key: map[string]*dynamodb.AttributeValue{
-			"userID": {
-				S: aws.String(req.UserID),
+			"email": {
+				S: aws.String(req.GetEmail()),
 			},
 		},
 	})
@@ -105,11 +105,11 @@ func (s *Storage) GetBooking(req *rpc.GetBookingReq, res *rpc.GetBookingRes) err
 	result, err := s.client.GetItem(&dynamodb.GetItemInput{
 		TableName: aws.String(tableName),
 		Key: map[string]*dynamodb.AttributeValue{
-			"userID": {
-				S: aws.String(req.UserID),
+			"email": {
+				S: aws.String(req.GetEmail()),
 			},
 			"bookingLinkID": {
-				S: aws.String(req.BookingLinkID),
+				S: aws.String(req.GetBookingLinkID()),
 			},
 		},
 	})

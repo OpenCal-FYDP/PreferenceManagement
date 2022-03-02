@@ -72,28 +72,17 @@ Resources:
     Properties:
       TableName: "UserPreferences"
       AttributeDefinitions:
-        - AttributeName: "userID"
-          AttributeType: "S"
         - AttributeName: "email"
           AttributeType: "S"
         - AttributeName: "username"
           AttributeType: "S"
       KeySchema:
-        - AttributeName: "userID"
+        - AttributeName: "email"
           KeyType: HASH
       ProvisionedThroughput:
         ReadCapacityUnits: !Ref 'ReadCapacityUnits'
         WriteCapacityUnits: !Ref 'WriteCapacityUnits'
-      GlobalSecondaryIndexes: 
-        - IndexName: "email-index"
-          KeySchema:
-            - AttributeName: "email"
-              KeyType: "HASH" # Are these "RANGE" for "RangeKey"? I feel like they must be hash?
-          Projection:
-            ProjectionType: "ALL"
-          ProvisionedThroughput: 
-            ReadCapacityUnits: !Ref 'ReadCapacityUnits'
-            WriteCapacityUnits: !Ref 'WriteCapacityUnits'
+      GlobalSecondaryIndexes:
         - IndexName: "username-index"
           KeySchema:
             - AttributeName: "username"
